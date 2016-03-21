@@ -82,14 +82,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1">
+            <div class="col-md-1 col-sm-2 col-xs-1">
                 <div class="row">
                     <button class="btn btn-default btn-block" ng-click="init()"><i
                             class="icon-repeat"></i> Init
                     </button>
+                    <!--
                     <button class="btn btn-default btn-block" ng-click="start()">
                         <i class="icon-prev">Stop</i>
                     </button>
+                    -->
 
                     <button class="btn btn-default btn-block" ng-click="start()">
                         <i class="icon-bar"></i>Algorithm 0
@@ -100,16 +102,20 @@
                     </button>
 
                     <button class="btn btn-success btn-block" ng-click="solve()"><i
-                            class="icon-ok-sign"></i> Solve
+                            class="icon-ok-sign"></i> Algorithm 2
                     </button>
+                    <!--
                     <button class="btn btn-primary btn-block" ng-click="clear()">
                         <i class="icon-off"></i> Clear
                     </button>
+                    -->
+                    <br/>
 
-                    <input placeholder="number of element" ng-model="removeCellNumber" />
+                    <input class="form-control" placeholder="number of cells" ng-model="removeCellNumber" />
+
 
                     <button class="btn btn-primary btn-block" ng-click="eliminate()">
-                        <i class="icon-off"></i>Confirm removing {[{removeCellNumber}]} cells
+                        <i class="icon-off"></i>Clean {[{removeCellNumber}]} cells
                     </button>
                 </div>
             </div>

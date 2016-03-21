@@ -23,31 +23,6 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
         alert(message);
     }
 
-    $scope.eliminate =  function () {
-        var removeChance = 0.5;
-        var row, column;
-
-        if($scope.removeCellNumber>81 || $scope.removeCellNumber < 0 ){
-            my_alert("Wrong cell number.")
-            return;
-        }
-
-        for(var i=0 ; i < $scope.removeCellNumber;) {
-            row = 9, column = 9;
-            row = Math.floor((Math.random() * 10) + 1) % row;
-            column = Math.floor((Math.random() * 10) + 1) % column;
-
-            console.log(row);
-            console.log(column);
-            var temp = Math.random();
-            console.log(temp)
-            if (removeChance > temp && $scope.rows[row].columns[column].value !== "") {
-                $scope.rows[row].columns[column].value = "";
-                i++;
-            }
-        }
-    };
-
     /**
      * Checks if the current grid is solved.
      */
@@ -390,7 +365,8 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 		$scope.rows = jQuery.extend(true, [], $scope.rows_save);
 	};
 	
-	$scope.clear = function() {		
+	$scope.clear = function() {
+        my_alert("function clear was called.");
 		$scope.rows = createEmptyRows();
 	};
 
@@ -408,7 +384,9 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
     /**
      * Generates a new grid.
      */
-	$scope.generate = function() {		
+	$scope.generate = function() {
+        my_alert("function 'generate' was called." );
+
 		var rows = createEmptyRows();
 		var results = solveRows(rows);
 		if(results['state']){
@@ -516,4 +494,29 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 		else
 			my_alert("can't be solved")
 	};
+
+    $scope.eliminate =  function () {
+        var removeChance = 0.5;
+        var row, column;
+
+        if($scope.removeCellNumber>81 || $scope.removeCellNumber < 0 ){
+            my_alert("Wrong cell number.")
+            return;
+        }
+
+        for(var i=0 ; i < $scope.removeCellNumber;) {
+            row = 9, column = 9;
+            row = Math.floor((Math.random() * 10) + 1) % row;
+            column = Math.floor((Math.random() * 10) + 1) % column;
+
+            console.log(row);
+            console.log(column);
+            var temp = Math.random();
+            console.log(temp)
+            if (removeChance > temp && $scope.rows[row].columns[column].value !== "") {
+                $scope.rows[row].columns[column].value = "";
+                i++;
+            }
+        }
+    };
 }); 

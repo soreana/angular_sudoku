@@ -64,9 +64,7 @@
 <header class="site-header">
     <nav>
         <a class="brand" href="/">
-            <img src="apps/images/logo.png" alt="Inc">
         </a>
-        <a href="/about.html">About</a>
     </nav>
 </header>
 <div id="wrapper" class="container" ng-app="Sudoku">
@@ -89,17 +87,30 @@
                     <button class="btn btn-default btn-block" ng-click="init()"><i
                             class="icon-repeat"></i> Init
                     </button>
-                    <button class="btn btn-danger btn-block" ng-click="generate()"><i
-                            class="icon-random"></i> New
+                    <button class="btn btn-default btn-block" ng-click="start()">
+                        <i class="icon-prev">Stop</i>
                     </button>
+
+                    <button class="btn btn-default btn-block" ng-click="start()">
+                        <i class="icon-bar"></i>Algorithm 0
+                    </button>
+
+                    <button class="btn btn-default btn-block" ng-click="algorithm(1)">
+                        <i class="icon-repeat"></i>Algorithm 1
+                    </button>
+
                     <button class="btn btn-success btn-block" ng-click="solve()"><i
                             class="icon-ok-sign"></i> Solve
                     </button>
-                    <button class="btn btn-primary btn-block" ng-click="clear()"><i
-                            class="icon-off"></i> Clear
+                    <button class="btn btn-primary btn-block" ng-click="clear()">
+                        <i class="icon-off"></i> Clear
                     </button>
-                    <a class="btn  btn-info btn-block"
-                       href="https://github.com/mouradmourafiq/angular_sudoku">fork me!</a>
+
+                    <input placeholder="number of element" ng-model="removeCellNumber" />
+
+                    <button class="btn btn-primary btn-block" ng-click="eliminate()">
+                        <i class="icon-off"></i>Confirm removing {[{removeCellNumber}]} cells
+                    </button>
                 </div>
             </div>
         </div>

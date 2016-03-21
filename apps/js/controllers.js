@@ -4,6 +4,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 	$scope.rows = angular.copy(data);	
 	$scope.rows_save = angular.copy(data);	
 	$scope.current_possibilities = [];
+    $scope.removeCellNumber= 0;
 
     /**
      * Creates an empty grid.
@@ -17,6 +18,35 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 			}
 		return rows;
 	}
+
+    function my_alert ( message ){
+        alert(message);
+    }
+
+    $scope.eliminate =  function () {
+        var removeChance = 0.5;
+        var row, column;
+
+        if($scope.removeCellNumber>81 || $scope.removeCellNumber < 0 ){
+            my_alert("Wrong cell number.")
+            return;
+        }
+
+        for(var i=0 ; i < $scope.removeCellNumber;) {
+            row = 9, column = 9;
+            row = Math.floor((Math.random() * 10) + 1) % row;
+            column = Math.floor((Math.random() * 10) + 1) % column;
+
+            console.log(row);
+            console.log(column);
+            var temp = Math.random();
+            console.log(temp)
+            if (removeChance > temp && $scope.rows[row].columns[column].value !== "") {
+                $scope.rows[row].columns[column].value = "";
+                i++;
+            }
+        }
+    };
 
     /**
      * Checks if the current grid is solved.
@@ -382,7 +412,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 		var rows = createEmptyRows();
 		var results = solveRows(rows);
 		if(results['state']){
-			alert("creating new grid");			
+			my_alert("creating new grid");
 			rows = angular.copy(results['rows']);
 			for (var l=0; l<9; l++){
 				for(var c=0; c<9; c++){				
@@ -481,9 +511,9 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 		var results = solveRows($scope.rows);
 		if(results['state']){
 			$scope.rows = jQuery.extend(true, [], results['rows']);
-			alert("solved");			
+			my_alert("solved");
 		}
 		else
-			alert("can't be solved")
+			my_alert("can't be solved")
 	};
 }); 

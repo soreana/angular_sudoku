@@ -1,4 +1,4 @@
-Sudoku.controller('SudokuController', function SudokuController($scope, data) {
+Sudoku.controller('SudokuController', function SudokuController($scope, data,$window) {
 	'use strict';
 
 	$scope.rows = angular.copy(data);	
@@ -361,8 +361,9 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data) {
 		return value;		
 	};
 
-	$scope.init = function() {		
-		$scope.rows = jQuery.extend(true, [], $scope.rows_save);
+	$scope.init = function() {
+        $window.location.reload();
+		//$scope.rows = jQuery.extend(true, [], $scope.rows_save);
 	};
 	
 	$scope.clear = function() {

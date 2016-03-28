@@ -12,12 +12,54 @@
     <script src="apps/js/controllers.js"></script>
     <script src="apps/js/filters.js"></script>
     <style type="text/css">
+
+        #mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 9000;
+            background-color: #000;
+            display: none;
+        }
+
+        #boxes .window {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 440px;
+            height: 200px;
+            display: none;
+            z-index: 9999;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        #boxes #dialog {
+            width: 750px;
+            height: 300px;
+            padding: 10px;
+            background-color: #ffffff;
+            font-family: 'Segoe UI Light', sans-serif;
+            font-size: 15pt;
+        }
+
+        #popupfoot {
+            font-size: 12pt;
+            position: absolute;
+            padding-left: 50%;
+            bottom: 5%;
+            width: 250px;
+        }
+        #popupfoot a{
+            font-size: 14pt;
+        }
         .margin_left_60 {
             margin-left: 60px !important;
         }
 
-        .margin_bottom_60 {
-            margin-bottom: 40px !important;
+        .margin_bottom_5 {
+            margin-bottom: 5px !important;
         }
 
         input.valide {
@@ -43,22 +85,67 @@
         }
 
         .site-header nav {
-          padding: 22px 30px;
+            padding: 22px 30px;
         }
 
         .site-header nav>a {
-          color: #444;
-          margin-right: 1.8em;
-          font-weight: 600;
-          font-size: 15px;
+            color: #444;
+            margin-right: 1.8em;
+            font-weight: 600;
+            font-size: 15px;
         }
 
         .site-header nav .brand img {
-          height: 40px;
-          margin-top: -2px;
-          vertical-align: middle;
+            height: 40px;
+            margin-top: -2px;
+            vertical-align: middle;
         }
     </style>
+    <script>
+        $(document).ready(function() {
+
+            var id = '#dialog';
+
+
+            //Get the screen height and width
+            var maskHeight = $(document).height();
+            var maskWidth = $(window).width();
+
+            //Set height and width to mask to fill up the whole screen
+            $('#mask').css({'width':maskWidth,'height':maskHeight});
+
+            //transition effect
+            $('#mask').fadeIn(500);
+            $('#mask').fadeTo("slow",0.9);
+
+            //Get the window height and width
+            var winH = $(window).height();
+            var winW = $(window).width();
+
+            //Set the popup window to center
+            $(id).css('top',  winH/2-$(id).height()/2);
+            $(id).css('left', winW/2-$(id).width()/2);
+
+            //transition effect
+            $(id).fadeIn(2000);
+
+            //if close button is clicked
+            $('.window .close').click(function (e) {
+                //Cancel the link behavior
+                e.preventDefault();
+
+                $('#mask').hide();
+                $('.window').hide();
+            });
+
+            //if mask is clicked
+            $('#mask').click(function () {
+                $(this).hide();
+                $('.window').hide();
+            });
+
+        });
+    </script>
 </head>
 <body>
 <header class="site-header">
@@ -87,36 +174,6 @@
                     <button class="btn btn-default btn-block" ng-click="init()"><i
                             class="icon-repeat"></i> Init
                     </button>
-                    <!--
-                    <button class="btn btn-default btn-block" ng-click="start()">
-                        <i class="icon-prev">Stop</i>
-                    </button>
-                    -->
-
-                    <button class="btn btn-default btn-block" ng-click="start()">
-                        <i class="icon-bar"></i>Algorithm 0
-                    </button>
-
-                    <button class="btn btn-default btn-block" ng-click="algorithm(1)">
-                        <i class="icon-repeat"></i>Algorithm 1
-                    </button>
-
-                    <button class="btn btn-success btn-block" ng-click="solve()"><i
-                            class="icon-ok-sign"></i> Algorithm 2
-                    </button>
-                    <!--
-                    <button class="btn btn-primary btn-block" ng-click="clear()">
-                        <i class="icon-off"></i> Clear
-                    </button>
-                    -->
-                    <br/>
-
-                    <input class="form-control" placeholder="number of cells" ng-model="removeCellNumber" />
-
-
-                    <button class="btn btn-primary btn-block" ng-click="eliminate()">
-                        <i class="icon-off"></i>Clean {[{removeCellNumber}]} cells
-                    </button>
                 </div>
             </div>
         </div>
@@ -129,7 +186,44 @@
             </div>
         </div>
         <hr>
+        <div id="boxes" class="container">
+
+            <div id="dialog" class="window">
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <input class="col-sm-4 form-control margin_bottom_5" placeholder="number of cells"
+                               ng-model="removeCellNumber" />
+                        <button class="col-sm-4 btn btn-primary btn-block" ng-click="eliminate()">
+                            <i class="icon-off"></i>Clean {[{removeCellNumber}]} cells
+                        </button>
+                    </div>
+
+                    <div class="col-md-4"></div>
+
+                    <div class="col-md-4">
+
+                        <button class="btn btn-default btn-block" ng-click="start()">
+                            <i class="icon-bar"></i>Algorithm 0
+                        </button>
+
+                        <button class="btn btn-default btn-block" ng-click="algorithm(1)">
+                            <i class="icon-repeat"></i>Algorithm 1
+                        </button>
+
+
+                        <button class="btn btn-success btn-block" ng-click="solve()"><i
+                                class="icon-ok-sign"></i> Algorithm 2
+                        </button>
+                    </div>
+                </div>
+
+                <div id="popupfoot"> <a href="#" style="color:darkgreen;" class="close agree">start</a></div>
+            </div>
+            <div id="mask"></div>
+        </div>
     </div>
+
 </div>
 </body>
 </html>

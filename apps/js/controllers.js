@@ -6,6 +6,11 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
 	$scope.current_possibilities = [];
     $scope.removeCellNumber= 0;
 
+    $scope.algorithm0Active = "btn btn-default btn-block";
+    $scope.algorithm1Active = "btn btn-default btn-block";
+    $scope.algorithm2Active = "btn btn-success btn-block";
+
+    var algorithmMethod = $scope.solve;
     /**
      * Creates an empty grid.
      */
@@ -22,6 +27,29 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
     function my_alert ( message ){
         alert(message);
     }
+
+    function eliminate () {
+        var removeChance = 0.5;
+        var row, column;
+
+        if($scope.removeCellNumber>81 || $scope.removeCellNumber < 0 ){
+            my_alert("Wrong cell number.")
+            return;
+        }
+
+        for(var i=0 ; i < $scope.removeCellNumber;) {
+            row = 9, column = 9;
+            row = Math.floor((Math.random() * 10) + 1) % row;
+            column = Math.floor((Math.random() * 10) + 1) % column;
+
+            var temp = Math.random();
+            if (removeChance > temp && $scope.rows[row].columns[column].value !== "") {
+                $scope.rows[row].columns[column].value = "";
+                i++;
+            }
+        }
+        $scope.removeCellNumber = 0;
+    };
 
     /**
      * Checks if the current grid is solved.
@@ -487,6 +515,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
 	};
 	
 	$scope.solve = function() {
+        my_alert("Useless function 'solve' was called.")
 		var results = solveRows($scope.rows);
 		if(results['state']){
 			$scope.rows = jQuery.extend(true, [], results['rows']);
@@ -496,28 +525,34 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
 			my_alert("can't be solved")
 	};
 
-    $scope.eliminate =  function () {
-        var removeChance = 0.5;
-        var row, column;
+    $scope.algorithm = function(id){
+        var defaultClass = "btn btn-default btn-block";
+        $scope.algorithm0Active = defaultClass;
+        $scope.algorithm1Active = defaultClass;
+        $scope.algorithm2Active = defaultClass;
 
-        if($scope.removeCellNumber>81 || $scope.removeCellNumber < 0 ){
-            my_alert("Wrong cell number.")
-            return;
+        switch (id){
+            case 0:
+                $scope.algorithm0Active = "btn btn-success btn-block";
+                algorithmMethod = function(){
+                    console.log('method zero was called.')
+                };
+                break;
+            case 1:
+                $scope.algorithm1Active = "btn btn-success btn-block";
+                algorithmMethod = function(){
+                    console.log('method one was called.')
+                };
+                break;
+            case 2:
+                algorithmMethod = $scope.solve;
+                $scope.algorithm2Active = "btn btn-success btn-block";
+                break;
         }
+    };
 
-        for(var i=0 ; i < $scope.removeCellNumber;) {
-            row = 9, column = 9;
-            row = Math.floor((Math.random() * 10) + 1) % row;
-            column = Math.floor((Math.random() * 10) + 1) % column;
-
-            console.log(row);
-            console.log(column);
-            var temp = Math.random();
-            console.log(temp)
-            if (removeChance > temp && $scope.rows[row].columns[column].value !== "") {
-                $scope.rows[row].columns[column].value = "";
-                i++;
-            }
-        }
+    $scope.onStart = function(){
+        eliminate();
+        algorithmMethod();
     };
 }); 

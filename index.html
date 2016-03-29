@@ -172,7 +172,7 @@
             <div class="col-md-1 col-sm-2 col-xs-1">
                 <div class="row">
                     <button class="btn btn-default btn-block" ng-click="init()"><i
-                            class="icon-repeat"></i> Init
+                            class="icon-repeat"></i>Repeat
                     </button>
                 </div>
             </div>
@@ -192,34 +192,32 @@
                 <div class="row">
                     <div class="col-md-4">
                         <br>
+                        <p>input number of cell to remove</p>
                         <input class="col-sm-4 form-control margin_bottom_5" placeholder="number of cells"
                                ng-model="removeCellNumber" />
-                        <button class="col-sm-4 btn btn-primary btn-block" ng-click="eliminate()">
-                            <i class="icon-off"></i>Clean {[{removeCellNumber}]} cells
-                        </button>
                     </div>
 
                     <div class="col-md-4"></div>
 
                     <div class="col-md-4">
-
-                        <button class="btn btn-default btn-block" ng-click="start()">
+                        <button ng-class="algorithm0Active" ng-click="algorithm(0)">
                             <i class="icon-bar"></i>Algorithm 0
                         </button>
 
-                        <button class="btn btn-default btn-block" ng-click="algorithm(1)">
+                        <button ng-class="algorithm1Active" ng-click="algorithm(1)">
                             <i class="icon-repeat"></i>Algorithm 1
                         </button>
 
 
-                        <button class="btn btn-success btn-block" ng-click="solve()"><i
+                        <button ng-class="algorithm2Active" ng-click="algorithm(2)"><i
                                 class="icon-ok-sign"></i> Algorithm 2
                         </button>
                     </div>
                 </div>
 
-                <div id="popupfoot"> <a href="#" style="color:darkgreen;" class="close agree">start</a></div>
-            </div>
+                <div id="popupfoot">
+                    <a href="#" style="color:darkgreen;" class="close agree" ng-click="onStart()">start</a></div>
+                </div>
             <div id="mask"></div>
         </div>
     </div>

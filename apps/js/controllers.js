@@ -10,7 +10,8 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
     $scope.algorithm1Active = "btn btn-default btn-block";
     $scope.algorithm2Active = "btn btn-success btn-block";
 
-    var algorithmMethod = $scope.solve;
+    var algorithmMethod = solve;
+
     /**
      * Creates an empty grid.
      */
@@ -49,7 +50,19 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
             }
         }
         $scope.removeCellNumber = 0;
-    };
+
+        addClassCorrectToRows();
+    }
+
+    function addClassCorrectToRows(){
+        for(var i=0; i<9;i++){
+            for(var j=0; j<9; j++){
+                if($scope.rows[i].columns[j].value !== ""){
+                    $scope.rows[i].columns[j].class = "correct";
+                }
+            }
+        }
+    }
 
     /**
      * Checks if the current grid is solved.
@@ -514,7 +527,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
 		$scope.currentPossibilities = angular.copy(pos);
 	};
 	
-	$scope.solve = function() {
+    function solve () {
         my_alert("Useless function 'solve' was called.")
 		var results = solveRows($scope.rows);
 		if(results['state']){
@@ -524,6 +537,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
 		else
 			my_alert("can't be solved")
 	};
+
 
     $scope.algorithm = function(id){
         var defaultClass = "btn btn-default btn-block";
@@ -536,6 +550,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
                 $scope.algorithm0Active = "btn btn-success btn-block";
                 algorithmMethod = function(){
                     console.log('method zero was called.')
+
                 };
                 break;
             case 1:
@@ -545,7 +560,7 @@ Sudoku.controller('SudokuController', function SudokuController($scope, data,$wi
                 };
                 break;
             case 2:
-                algorithmMethod = $scope.solve;
+                algorithmMethod = solve;
                 $scope.algorithm2Active = "btn btn-success btn-block";
                 break;
         }
